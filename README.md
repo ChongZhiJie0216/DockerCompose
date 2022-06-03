@@ -4,17 +4,13 @@ Server Docker Compose Collection
 ## Command of Docker Compose
 
 Create
-
-`docker compose up -d`
+```docker compose up -d```
 
 Start 
-
-`docker compose start`
+```docker compose start```
 
 Stop 
-
-`docker compose stop `
+```docker compose stop ```
 
 Remove 
-
-`docker compose down`
+```docker compose down```
