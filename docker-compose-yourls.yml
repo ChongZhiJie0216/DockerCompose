@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  yourls:
+    image: yourls
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      YOURLS_DB_PASS: example
+      YOURLS_SITE: https://yourls.jiecloud.ml
+      YOURLS_USER: ChongZhiJie
+      YOURLS_PASS: jIE.zc@chong0216
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example

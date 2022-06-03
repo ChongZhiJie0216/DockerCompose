@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+    documentserver:
+        ports:
+            - '8111:80'
+        volumes:
+            - '/home/jiecloud/Docker/onlyoffice/log/:/var/log/onlyoffice'
+            - '/home/jiecloud/Docker/onlyoffice/data/:/var/www/onlyoffice/Data'
+            - '/home/jiecloud/Docker/onlyoffice/cache/:/var/lib/onlyoffice'
+            - '/home/jiecloud/Docker/onlyoffice/rabbitmq:/var/lib/rabbitmq'
+            - '/home/jiecloud/Docker/onlyoffice/redis:/var/lib/redis'
+            - '/home/jiecloud/Docker/onlyoffice/database/:/var/lib/postgresql'
+        image: onlyoffice/documentserver
