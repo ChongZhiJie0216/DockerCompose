@@ -12,7 +12,7 @@ services:
       - '8929:8929'
       - '2224:22'
     volumes:
-      - '/home/jiecloud/Docker/gitlab/config:/etc/gitlab'
-      - '/home/jiecloud/Docker/gitlab/logs:/var/log/gitlab'
-      - '/home/jiecloud/Docker/gitlab/data:/var/opt/gitlab'
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
     shm_size: '256m'

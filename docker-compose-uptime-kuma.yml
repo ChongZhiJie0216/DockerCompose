@@ -5,6 +5,6 @@ services:
             - '3001:3001'
         restart: always
         volumes:
-            - '/media/jiecloud/HDD01-230GB/Docker/uptimekuma/:/app/data'
+            - './data/:/app/data'
         container_name: uptime-kuma
         image: 'louislam/uptime-kuma'

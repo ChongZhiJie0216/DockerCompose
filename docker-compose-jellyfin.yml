@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - /home/jiecloud/Docker/Jellyfin/config/:/config
+      - ./config/:/config
     ports:
       - 8096:8096
     restart: always

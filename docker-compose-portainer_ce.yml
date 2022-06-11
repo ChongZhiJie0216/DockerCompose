@@ -7,5 +7,5 @@ services:
         container_name: portainer
         volumes:
             - '/var/run/docker.sock:/var/run/docker.sock'
-            - '/home/jiecloud/Docker/portainer/:/data'
+            - './portainer/:/data'
         image: portainer/portainer-ce:latest

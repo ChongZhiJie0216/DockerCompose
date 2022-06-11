@@ -1,0 +1,63 @@
+ pageInfo:
+  title: Dashy
+  description: Welcome to your new dashboard!
+  navLinks:
+    - title: GitHub
+      path: https://github.com/Lissy93/dashy
+    - title: Documentation
+      path: https://dashy.to/docs
+appConfig:
+  theme: material
+  layout: vertical
+  iconSize: medium
+  language: cn
+sections:
+  - name: Dashboard-Console
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: true
+    items:
+      - title: BTPanel
+        description: ''
+        url: -
+        tags:
+          - dashboard
+        id: 0_1672_btpanel
+      - title: Portainer
+        description: Docker Dashboard
+        url: -
+        id: 1_1672_portainer
+      - title: UPTIME-KUMA
+        description: Server Status
+        url: -
+        id: 2_1672_uptimekuma
+  - name: Application
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - title: Drive
+        description: Drive from Jiecloud
+        url: https://drive.jiecloud.ml/
+        id: 0_1140_drive
+      - title: Jellyfin
+        description: Media Station
+        url: https://jellyfin.jiecloud.ml/
+        id: 1_1140_jellyfin
+  - name: Games Service
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - title: Jiecloud MC Server
+        url: https://mc.jiecloud.ml/
+        id: 0_1246_jiecloudmcserver
