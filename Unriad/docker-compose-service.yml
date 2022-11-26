@@ -1,0 +1,94 @@
+version: "3.8"
+services:
+  MariaDB:
+    image: linuxserver/mariadb:latest
+    container_name: MariaDB
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=022
+      - MYSQL_ROOT_PASSWORD=
+      - TZ=Asia/Kuala_Lumpur
+      - MYSQL_DATABASE= #optional
+      - MYSQL_USER= #optional
+      - MYSQL_PASSWORD= #optional
+      - REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - ./MariaDB:/config
+    ports:
+      - 3306:3306
+    networks:
+        vlan-net:
+            ipv4_address: 192.168.1.54
+    deploy:
+        resources:
+            limits:
+              cpus: 0,1,2,3,4,5,6,7
+    restart: unless-stopped
+  
+  Redis:
+    image: redis
+    container_name: Redis
+    ports:
+      - 6379:6379
+    networks:
+        vlan-net:
+            ipv4_address: 192.168.1.61
+    deploy:
+        resources:
+            limits:
+              cpus: 0,1,2,3,4,5,6,7
+    restart: unless-stopped
+
+  OnlyOffice-DocumentServer:
+    image: onlyoffice/documentserver
+    container_name: OnlyOffice-DocumentServer
+    ports:
+      - 80:80
+    networks:
+        vlan-net:
+            ipv4_address: 192.168.1.70
+    restart: unless-stopped
+
+  Freenom:
+    container_name: Freenom
+    image: luolongfei/freenom:koyeb
+    environment:
+      #Main(Must)
+      - FF_TOKEN=
+      - SHOW_SERVER_INFO=1
+      - MOSAIC_SENSITIVE_INFO=1
+      - FREENOM_USERNAME=
+      - FREENOM_PASSWORD=
+      #TelegramBot(Options)
+      - TELEGRAM_CHAT_ID=
+      - TELEGRAM_BOT_TOKEN=
+      - TELEGRAM_BOT_ENABLE=1
+      #MailBot(Options)
+      - MAIL_ENABLE=1
+      - MAIL_USERNAME=
+      - MAIL_PASSWORD=
+      - TO=
+      #Custom Mail Server(Options)
+      - MAIL_HOST=smtp.office365.com
+      - MAIL_PORT=587
+      - MAIL_ENCRYPTION=starttls
+      #Another(Options)
+      - DEBUG=0
+      - CUSTOM_LANGUAGE=zh
+    volumes:
+      #- './.env:/app/.env.example:ro'
+      - './Freenom/logs:/app/logs'
+    ports:
+      - '80:80'
+    networks:
+      vlan-net:
+        ipv4_address: 192.168.1.59
+    restart: always
+
+networks:
+  vlan-net:
+    name: br0.10
+    driver: macvlan
+    driver_opts:
+      parent: eth0

@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+    kod-kodexplorer:
+        ports:
+            - '8000:80'
+        container_name: kodexplorer
+        volumes:
+            - './koddata/:/var/www/html'
+            - '/media/jiecloud/:/Jiecloud'
+            - '/media/jiecloud/HDD01-230GB/Docker/:/Docker'
+        image: yangxuan8282/kodexplorer

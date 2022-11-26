@@ -1,0 +1,11 @@
+version: "3"
+services:
+  lavalink:
+    image: chongzhijie/lavalink
+    container_name: lavalink
+    hostname: lavalink
+    restart: restart
+    ports:
+      - "2333:2333"
+    volumes:
+      - ./application.yml:/opt/Lavalink/application.yml:ro

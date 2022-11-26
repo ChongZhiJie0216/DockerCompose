@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+    documentserver:
+        ports:
+            - '8111:80'
+        volumes:
+            - './log/:/var/log/onlyoffice'
+            - './data/:/var/www/onlyoffice/Data'
+            - './cache/:/var/lib/onlyoffice'
+            - './rabbitmq:/var/lib/rabbitmq'
+            - './redis:/var/lib/redis'
+            - './database/:/var/lib/postgresql'
+        image: onlyoffice/documentserver
