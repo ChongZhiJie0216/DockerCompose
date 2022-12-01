@@ -1,5 +1,22 @@
 version: "3.8"
 services:
+  FileBrowser-Games:
+    container_name: FileBrowser-Games
+    image: filebrowser/filebrowser:s6
+    environment:
+    - PUID=0
+    - PGID=0
+    volumes:
+    - /mnt/user/appdata/GameServer:/srv
+    - ./FileBrowser/filebrowser.db:/database/filebrowser.db
+    - ./FileBrowser/settings.json:/config/settings.json
+    - ./FileBrowser/branding:/branding
+    ports:
+    - 8080:80
+    networks:
+        vlan-net:
+            ipv4_address: 192.168.1.101
+  
   Application-Management-Panel:
     image: mitchtalmadge/amp-dockerized
     container_name: AMP
@@ -16,7 +33,7 @@ services:
       - 80:8080
     networks:
       vlan-net:
-        ipv4_address: 192.168.1.53
+        ipv4_address: 192.168.1.58
     deploy:
       resources:
         limits:
