@@ -6,11 +6,11 @@
 
 |NETWORK 	    |ID 				      |NAME DRIVER 	  |SCOPE|
 |-------------|-----------------|---------------|-----|
-|4a55cf69165e |br0(NIC) 		    |macvlan 		    |local|
-|46941261fc30 |br0.10(VLAN) 	  |macvlan 		    |local|
-|5424fffc7098 |bridge 			    |bridge 		    |local|
-|d858b412d68b |host 			      |host 			    |local|
-|45c05227834e |none 			      |null 			    |local|
+|XXXXXXXXXXXX |br0(NIC) 		    |macvlan 		    |local|
+|XXXXXXXXXXXX |br0.10(VLAN) 	  |macvlan 		    |local|
+|XXXXXXXXXXXX |bridge 			    |bridge 		    |local|
+|XXXXXXXXXXXX |host 			      |host 			    |local|
+|XXXXXXXXXXXX |none 			      |null 			    |local|
 
 ### 在Docker-compose.yml的文件夹内增加这几个参数
 
