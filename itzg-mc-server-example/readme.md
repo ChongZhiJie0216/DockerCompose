@@ -7,7 +7,7 @@
 |mod.jiecloud.net                   |192.168.1.54 	    |25567 			|
 |ftb.jiecloud.net                   |192.168.1.55 	    |25568			|
 |hv.jiecloud.net(Happy_Learf)	    |192.168.1.56 		|25569			|
-|GH-Friend(melonmilk)               |192.168.1.57 		|25570 			|
+|melonmilk.jiecloud.net(GH-Friend)  |192.168.1.57 		|25570 			|
 
 ## RCON
 ```yml
