@@ -11,6 +11,6 @@
 
 ## RCON
 ```yml
-# RCON_PORT:25575
-# RCON_PASSWORD: minecraft
+ RCON_PORT: 25575
+ RCON_PASSWORD: minecraft
 ```
