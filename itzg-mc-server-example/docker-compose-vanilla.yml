@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  MC-Vanilla:
+    image: itzg/minecraft-server:java17-alpine
+    container_name: MC-Vanilla
+    environment:
+      #Server Setting
+      TYPE: VANILLA
+      VERSION: 1.19.3
+      EULA: true
+      ENABLE_RCON: true
+      RCON_PORT: 25575
+      RCON_PASSWORD: minecraft
+      # Server-Properties
+      ENABLE_QUERY: true
+      ONLINE_MODE: true
+      MAX_PLAYERS: 10
+      SERVER_PORT: 25570
+      QUERY_PORT: 25570
+      RCON_PORT: 25575
+      # Advanced-Server-Properties
+      DIFFICULTY: NORMAL
+      ALLOW_FLIGHT: true
+      ENABLE_COMMAND_BLOCK: true
+      ALLOW_NETHER: true
+      SPAWN_ANIMALS: true
+      SPAWN_NPCS: true
+      SPAWN_MONSTERS: true
+      HARDCORE: false
+      ANNOUNCE_PLAYER_ACHIEVEMENTS: true
+      MAX_TICK_TIME: -1
+      SPAWN_PROTECTION: 0
+      VIEW_DISTANCE: 10
+      PVP: true
+      MODE: survival
+      MOTD: "MC-Vanilla-Server"
+      # Server Settings
+      INIT_MEMORY: 4G
+      MAX_MEMORY : 8G
+      UID: 0
+      GID: 0
+      tty: true
+      stdin_open: true
+    ports:
+      - 25565:25565
+      - 25566:25566
+      - 25567:25567
+      - 25568:25568
+      - 25569:25569
+      - 25570:25570
+      - 25575:25575 #RCON
+    volumes:
+    - ./:/data
+    restart: unless-stopped
+    deploy:
+        resources:
+            limits:
+              cpus: 0,1,2,3,4,5,6,7
+    networks:
+        vlan-net:
+          ipv4_address: 192.168.1.
+
+networks:
+  vlan-net:
+    name: br0.10
+    driver: macvlan
+    driver_opts:
+      parent: eth0
