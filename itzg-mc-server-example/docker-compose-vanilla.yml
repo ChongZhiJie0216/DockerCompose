@@ -50,7 +50,7 @@ services:
       - 25570:25570
       - 25575:25575 #RCON
     volumes:
-    - ./:/data
+      - ./:/data
     restart: unless-stopped
     deploy:
         resources:

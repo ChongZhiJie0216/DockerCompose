@@ -1,13 +1,15 @@
 version: '3.8'
 services:
-  MC-Forge-Server:
+  Curse-Forge-Server:
     image: itzg/minecraft-server:java17-alpine
-    container_name: MC-Forge-Server
+    container_name: Curse-Forge-Server
     environment:
       #Server Setting
-      TYPE: FORGE
-      VERSION:
-      FORGE_VERSION:
+      TYPE: AUTO_CURSEFORGE
+      CF_SLUG: 
+      CF_PAGE_URL: 
+      CF_FILE_ID: 
+      CF_FILENAME_MATCHER: 
       EULA: true
       ENABLE_RCON: true
       RCON_PORT: 25575
@@ -34,7 +36,7 @@ services:
       VIEW_DISTANCE: 10
       PVP: true
       MODE: survival
-      MOTD: "MC-Forge-Server"
+      MOTD: "Curse-Forge-Server"
       # Server Settings
       INIT_MEMORY: 4G
       MAX_MEMORY : 8G
@@ -49,7 +51,7 @@ services:
       - 25568:25568
       - 25569:25569
       - 25570:25570
-      - 25575:25575
+      - 25575:25575 #RCON
     volumes:
       - ./modpacks:/modpacks:ro
       - ./:/data
