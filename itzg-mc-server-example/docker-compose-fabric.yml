@@ -52,7 +52,6 @@ services:
       - 25570:25570
       - 25575:25575 #RCON
     volumes:
-      - ./modpacks:/modpacks:ro
       - ./:/data
     restart: unless-stopped
     deploy:

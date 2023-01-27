@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  Curse-Forge-Server:
+  Dreamcraft:
     image: itzg/minecraft-server:java17-alpine
-    container_name: Curse-Forge-Server
+    container_name: Dreamcraft
     environment:
       #Server Setting
       TYPE: CURSEFORGE

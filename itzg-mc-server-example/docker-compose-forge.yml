@@ -51,7 +51,6 @@ services:
       - 25570:25570
       - 25575:25575
     volumes:
-      - ./modpacks:/modpacks:ro
       - ./:/data
     restart: unless-stopped
     deploy:
