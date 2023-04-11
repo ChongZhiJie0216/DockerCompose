@@ -30,7 +30,7 @@ curl -H "Content-Type: application/json" -d'{
     {
       "title": "Docker Compose Stoping",
       "color": 16690208,
-      "description": "Now Updating: '"$x"'",
+      "description": "Now Stopping: '"$x"'",
       "timestamp": "",
       "author": {
         "name": "'$server_name'",

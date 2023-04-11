@@ -42,7 +42,7 @@ for x in ${dir[@]}; do
     {
       "title": "Docker Compose Starting",
       "color": 16690208,
-      "description": "Now Updating: '"$x"'",
+      "description": "Now Starting: '"$x"'",
       "timestamp": "",
       "author": {
         "name": "'$server_name'",

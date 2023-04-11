@@ -41,7 +41,7 @@ for x in ${dir[@]}; do
     {
       "title": "Docker Compose Stoping",
       "color": 16690208,
-      "description": "Now Updating: '"$x"'",
+      "description": "Now Stoppping: '"$x"'",
       "timestamp": "",
       "author": {
         "name": "'$server_name'",
