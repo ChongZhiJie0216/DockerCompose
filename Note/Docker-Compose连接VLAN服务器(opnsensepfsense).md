@@ -12,6 +12,13 @@
 |XXXXXXXXXXXX |host 			      |host 			    |local|
 |XXXXXXXXXXXX |none 			      |null 			    |local|
 
+### 在输入指令
+
+```docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0.10 vlan-net```
+
+网口-->parent=eth0.10
+名字-->vlan-net
+
 ### 在Docker-compose.yml的文件夹内增加这几个参数
 
 ```yml
@@ -19,13 +26,9 @@ version: "3.8"
 services:
     Test:
       networks:
-          vlan-net:
-              ipv4_address: 192.168.1.101
+        vlan-net:
+            ipv4_address: 192.168.1.101
 
 networks:
   vlan-net:
-    name: br0.10
-    driver: macvlan
-    driver_opts:
-        parent: eth0 
-```
+    external: true
