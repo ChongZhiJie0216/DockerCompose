@@ -20,7 +20,7 @@ curl -H "Content-Type: application/json" -d'{
   "content": "",
   "embeds": [
     {
-      "title": "Docker Compose Starting",
+      "title": "Docker Compose Updateing",
       "color": 16711680,
       "description": "",
       "timestamp": "",
@@ -44,9 +44,9 @@ for x in ${dir[@]}; do
   "content": "",
   "embeds": [
     {
-      "title": "Docker Compose Starting",
+      "title": "Docker Compose Updateing",
       "color": 16690208,
-      "description": "Now Starting: '"$x"'",
+      "description": "Now Updateing: '"$x"'",
       "timestamp": "",
       "author": {
         "name": "'$server_name'",
@@ -63,15 +63,19 @@ for x in ${dir[@]}; do
   "components": []}' "$discord_webhook"
   up_docker_dir="$dir_path/${x}"
   cd "$up_docker_dir"
+  docker compose pull
   docker compose up -d
+  sleep 10s
 done
+echo "y" | docker image prune 
+
 curl -H "Content-Type: application/json" -d'{
   "username": "'$user_name'",
   "avatar_url": "'$avatar_url'",
   "content": "",
   "embeds": [
     {
-      "title": "All Docker Compose  Started ",
+      "title": "All Docker Compose Update Done ",
       "color": 1179392,
       "description": "",
       "timestamp": "",

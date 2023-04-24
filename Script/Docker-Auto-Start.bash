@@ -66,6 +66,7 @@ for x in ${dir[@]}; do
   up_docker_dir="$dir_path/${x}"
   cd "$up_docker_dir"
   docker compose up -d
+  sleep 10s
 done
 curl -H "Content-Type: application/json" -d'{
   "username": "'$user_name'",
