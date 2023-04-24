@@ -1,5 +1,6 @@
 #!/bin/bash
 sleep 1m
+docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=br0.10 vlan-net
 #Discord_WebHook
 server_name=
 user_name=
@@ -8,8 +9,13 @@ avatar_url=
 server_icon_url=
 #Docker_Enviroment
 dir_path=
-dir=()
 #Funtion
+if [ "$(cat $dir_path/foldername.txt)" = "$(find $dir_path -mindepth 1 -maxdepth 1 -type d -printf '%f\n')" ]; then
+  readarray -t dir < "$dir_path/foldername.txt"
+else
+  find $dir_path -mindepth 1 -maxdepth 1 -type d -printf '%f\n' > "$dir_path/foldername.txt"
+  readarray -t dir < "$dir_path/foldername.txt"
+fi
 curl -H "Content-Type: application/json" -d'{
   "username": "'$user_name'",
   "avatar_url": "'$avatar_url'",
@@ -57,7 +63,7 @@ for x in ${dir[@]}; do
     }
   ],
   "components": []}' "$discord_webhook"
-  up_docker_dir=$dir_path/${x}
+  up_docker_dir="$dir_path/${x}"
   cd "$up_docker_dir"
   docker compose up -d
 done

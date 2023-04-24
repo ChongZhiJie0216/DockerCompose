@@ -9,13 +9,19 @@ server_icon_url=
 dir_path=
 dir=()
 #Funtion
+if [ "$(cat $dir_path/foldername.txt)" = "$(find $dir_path -mindepth 1 -maxdepth 1 -type d -printf '%f\n')" ]; then
+  readarray -t dir < "$dir_path/foldername.txt"
+else
+  find $dir_path -mindepth 1 -maxdepth 1 -type d -printf '%f\n' > "$dir_path/foldername.txt"
+  readarray -t dir < "$dir_path/foldername.txt"
+fi
 curl -H "Content-Type: application/json" -d'{
   "username": "'$user_name'",
   "avatar_url": "'$avatar_url'",
   "content": "",
   "embeds": [
     {
-      "title": "Docker Compose Stoping Started",
+      "title": "Docker Compose Starting",
       "color": 16711680,
       "description": "",
       "timestamp": "",
@@ -39,9 +45,9 @@ for x in ${dir[@]}; do
   "content": "",
   "embeds": [
     {
-      "title": "Docker Compose Stoping",
+      "title": "Docker Compose Starting",
       "color": 16690208,
-      "description": "Now Stoppping: '"$x"'",
+      "description": "Now Starting: '"$x"'",
       "timestamp": "",
       "author": {
         "name": "'$server_name'",
@@ -56,9 +62,9 @@ for x in ${dir[@]}; do
     }
   ],
   "components": []}' "$discord_webhook"
-  up_docker_dir=$dir_path/${x}
+  up_docker_dir="$dir_path/${x}"
   cd "$up_docker_dir"
-  docker compose down
+  docker compose up -d
 done
 curl -H "Content-Type: application/json" -d'{
   "username": "'$user_name'",
@@ -66,7 +72,7 @@ curl -H "Content-Type: application/json" -d'{
   "content": "",
   "embeds": [
     {
-      "title": "All Docker Compose Stoped ",
+      "title": "All Docker Compose  Started ",
       "color": 1179392,
       "description": "",
       "timestamp": "",
