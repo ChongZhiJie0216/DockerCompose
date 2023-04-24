@@ -7,7 +7,6 @@ avatar_url=
 server_icon_url=
 #Docker_Enviroment
 dir_path=
-dir=()
 #Funtion
 if [ "$(cat $dir_path/foldername.txt)" = "$(find $dir_path -mindepth 1 -maxdepth 1 -type d -printf '%f\n')" ]; then
   readarray -t dir < "$dir_path/foldername.txt"
