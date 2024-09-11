@@ -53,14 +53,10 @@ services:
       - ./modpacks:/modpacks:ro
       - ./:/data
     restart: unless-stopped
-    deploy:
-        resources:
-            limits:
-              cpus: 0,1,2,3,4,5,6,7
     networks:
-        vlan-net:
-            ipv4_address: 172.16.100.54
+      - MCServer
 
 networks:
-  vlan-net:
-    external: true
+  MCServer:
+    external: false
+    name: MCServer
