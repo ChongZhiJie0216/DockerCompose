@@ -17,11 +17,12 @@ Ensure the following tools are installed:
 - `docker-compose`
 - `pigz` (for multi-threaded backup compression)
 - `tar` (for archiving backups)
+- `cron` (for scheduling automated tasks)
 
 Install the required dependencies using the following command (for Debian/Ubuntu):
 
 ```sh
-sudo apt update && sudo apt install -y docker.io docker-compose pigz tar
+sudo apt update && sudo apt install -y docker.io docker-compose pigz tar cron
 ```
 
 ## Usage
