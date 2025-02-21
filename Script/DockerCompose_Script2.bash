@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Docker Compose Files Directory
-dir_path="/mnt/SSD/Docker/"
+dir_path="/root/Docker/"
 
 # Backup Settings
-backup_source="/mnt/SSD/Docker/"
-backup_target="/mnt/Backup/VM-P40/"
+backup_source="/root/Docker/"
+backup_target="/mnt/Backup/Alpine-Docker/"
 num_cores=24
 
 # Whitelist folders
-declare -a whitelist_folders=("Cloudflare" "ollama")
+declare -a whitelist_folders=("FileBrowser" "MariaDB" "Redis" "Nextcloud" "Gitea" "Alist")
 
 # Function to check if a folder is whitelisted
 is_whitelisted() {
@@ -22,32 +22,42 @@ is_whitelisted() {
     return 1
 }
 
-# Function to find all Docker Compose folders in whitelist
+# Function to find Docker Compose folders based on whitelist
 find_compose_folders() {
-    for folder in "$dir_path"/*/; do
-        folder_name=$(basename "$folder")
-        if is_whitelisted "$folder_name" && [[ -f "$folder/compose.yaml" ]]; then
-            echo "$folder"
+    local ordered_folders=()
+    for folder_name in "${whitelist_folders[@]}"; do
+        local folder_path="$dir_path$folder_name"
+        if [[ -d "$folder_path" && ( -f "$folder_path/compose.yml" || -f "$folder_path/compose.yaml" ) ]]; then
+            ordered_folders+=("$folder_path")
         fi
     done
+    echo "${ordered_folders[@]}"
 }
 
-# Function to start containers
+# Function to start containers in whitelist order
 start_containers() {
-    echo "Starting containers..."
+    echo "Starting containers in order..."
     for folder in $(find_compose_folders); do
-        docker compose -f "$folder/compose.yaml" up -d
+        compose_file="$folder/compose.yaml"
+        [[ -f "$folder/compose.yml" ]] && compose_file="$folder/compose.yml"
+        docker compose -f "$compose_file" up -d
         echo "Started: $folder"
     done
     echo "All containers are running."
 }
 
-# Function to stop containers
+# Function to stop containers in reverse whitelist order
 stop_containers() {
-    echo "Stopping containers..."
-    for folder in $(find_compose_folders); do
-        docker compose -f "$folder/compose.yaml" down
-        echo "Stopped: $folder"
+    echo "Stopping containers in reverse order..."
+    for (( idx=${#whitelist_folders[@]}-1 ; idx>=0 ; idx-- )); do
+        folder_name="${whitelist_folders[idx]}"
+        folder="$dir_path$folder_name"
+        if [[ -d "$folder" && ( -f "$folder/compose.yml" || -f "$folder/compose.yaml" ) ]]; then
+            compose_file="$folder/compose.yaml"
+            [[ -f "$folder/compose.yml" ]] && compose_file="$folder/compose.yml"
+            docker compose -f "$compose_file" down
+            echo "Stopped: $folder"
+        fi
     done
     echo "All containers have been stopped."
 }
@@ -56,8 +66,10 @@ stop_containers() {
 update_containers() {
     echo "Updating containers..."
     for folder in $(find_compose_folders); do
-        docker compose -f "$folder/compose.yaml" pull
-        docker compose -f "$folder/compose.yaml" up -d
+        compose_file="$folder/compose.yaml"
+        [[ -f "$folder/compose.yml" ]] && compose_file="$folder/compose.yml"
+        docker compose -f "$compose_file" pull
+        docker compose -f "$compose_file" up -d
         echo "Updated: $folder"
     done
     echo "All containers are up to date."
@@ -75,23 +87,18 @@ backup_containers() {
 
     echo "Starting backup..." | tee -a "$log_file"
 
-    for subdir in "$backup_source"/*/; do
+    for folder_name in "${whitelist_folders[@]}"; do
+        subdir="$backup_source$folder_name"
         [ -d "$subdir" ] || continue
-        subdir_name=$(basename "$subdir")
-
-        if ! is_whitelisted "$subdir_name"; then
-            echo "Skipping non-whitelisted folder: $subdir_name" | tee -a "$log_file"
-            continue
-        fi
-
+        
         start_time=$(date +%s)
-        echo "Backing up: $subdir_name" | tee -a "$log_file"
+        echo "Backing up: $folder_name" | tee -a "$log_file"
         uncompressed_size=$(du -sh "$subdir" | awk '{print $1}')
-        tar -cf - -C "$backup_source" "$subdir_name" | pigz -p "$num_cores" > "$backup_dir/$subdir_name.tar.gz"
+        tar -cf - -C "$backup_source" "$folder_name" | pigz -p "$num_cores" > "$backup_dir/$folder_name.tar.gz"
         end_time=$(date +%s)
         duration=$((end_time - start_time))
-        compressed_size=$(du -sh "$backup_dir/$subdir_name.tar.gz" | awk '{print $1}')
-        echo "Backup complete: $subdir_name in $duration sec (Before: $uncompressed_size, After: $compressed_size)" | tee -a "$log_file"
+        compressed_size=$(du -sh "$backup_dir/$folder_name.tar.gz" | awk '{print $1}')
+        echo "Backup complete: $folder_name in $duration sec (Before: $uncompressed_size, After: $compressed_size)" | tee -a "$log_file"
     done
 
     find "$backup_target" -mindepth 1 -maxdepth 1 -type d -mtime +7 -exec rm -rf {} \;
